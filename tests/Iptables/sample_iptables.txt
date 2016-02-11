@@ -1,0 +1,60 @@
+Chain INPUT (policy DROP) 
+num  target     prot opt source               destination
+1    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+2    DROP       all  --  0.0.0.0/0            0.0.0.0/0           state INVALID
+3    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED
+4    shlimit    tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:22 state NEW
+5    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           MAC 00:00:00:00:11:22
+6    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:900 MAC 00:00:00:33:11:22 sjfhgs
+7    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           MAC 00:00:00:77:11:22 limit: avg 5/min burst 10
+8    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+9    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:666
+10   ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8044
+11   shlimit    tcp  --  0.0.0.0/0            0.0.0.0/0           tcp dpt:8044 state NEW
+12   ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+13   ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0
+14   ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           limit: avg 5/day burst 5 limit: avg 5/hour burst 5
+15   ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0           MAC 88:00:00:77:11:22 MAC 99:00:00:77:11:22
+ 
+Chain FORWARD (policy DROP) 
+num  target     prot opt source               destination          
+1    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            
+2               all  --  0.0.0.0/0            0.0.0.0/0           account: network/netmask: 10.0.0.0/255.255.255.0 name: lan
+3               all  --  0.0.0.0/0            0.0.0.0/0           account: network/netmask: 10.0.1.0/255.255.255.0 name: lan1
+4    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            
+5    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            
+6    DROP       all  --  0.0.0.0/0            0.0.0.0/0           state INVALID  
+7    TCPMSS     tcp  --  0.0.0.0/0            0.0.0.0/0           tcp flags:0x08/0x05 TCPMSS clamp to PMTU
+8    monitor    all  --  0.0.0.0/0            0.0.0.0/0            
+9    ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED  
+10   DROP       all  --  0.0.0.0/0            0.0.0.0/0            
+11   DROP       all  --  0.0.0.0/0            0.0.0.0/0            
+12   wanin      all  --  0.0.0.0/0            0.0.0.0/0            
+13   wanout     all  --  0.0.0.0/0            0.0.0.0/0            
+14   ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            
+15   ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            
+ 
+Chain OUTPUT (policy ACCEPT) 
+num  target     prot opt source               destination          
+ 
+Chain monitor (1 references) 
+num  target     prot opt source               destination          
+1    RETURN     tcp  --  0.0.0.0/0            0.0.0.0/0           WEBMON --max_domains 2000 --max_searches 2000  
+ 
+Chain shlimit (2 references) 
+num  target     prot opt source               destination          
+1               all  --  0.0.0.0/0            0.0.0.0/0           recent: SET name: shlimit side: source  
+2    DROP       all  --  0.0.0.0/0            0.0.0.0/0           recent: UPDATE seconds: 60 hit_count: 4 name: shlimit side: source  
+ 
+Chain wanin (1 references) 
+num  target     prot opt source               destination          
+1    ACCEPT     tcp  --  0.0.0.0/0            10.0.0.1            tcp dpt:88
+2    ACCEPT     tcp  --  0.0.0.0/0            10.0.0.1            tcp dpt:501
+3    ACCEPT     tcp  --  0.0.0.0/0            10.0.0.1            tcp dpt:666
+4    ACCEPT     udp  --  0.0.0.0/0            10.0.0.1            udp dpt:690
+5    ACCEPT     tcp  --  0.0.0.0/0            10.0.0.1            tcp dpt:80
+6    ACCEPT     udp  --  0.0.0.0/0            10.0.0.1            udp dpt:80
+7    ACCEPT     udp  --  0.0.0.0/0            10.0.0.1            udp dpt:443
+ 
+Chain wanout (1 references) 
+num  target     prot opt source               destination          
