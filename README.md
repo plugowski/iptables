@@ -1,7 +1,7 @@
-# Parser iptables
+# Parser for iptables
 
 **iptable** library allows you to quick and easy parse and manipulate iptables records via PHP.
-As a main feature is parse raw iptable dump and build full objected tree with chains and rules. It moves almost all
+As a main feature it parse raw iptable dump and build full objected tree with chains and rules. It moves almost all
 functionality which give you _iptables_.
 
 Not all patches are implemented - for my purposes there was no need to do that - but it should be enough for most use
@@ -9,13 +9,13 @@ cases.
 
 ## Installation
 
-The simpliest way to install iptables is use the composer.
+The simpliest way to install iptables is by the composer.
 
 ```
 composer require plugowski/iptables
 ```
 
-Of course you can also download that repository and load all classes from src into your project.
+Of course you can also download that repository and load all classes from src into your project (don't forget to load all required files).
 
 ## Usage
 
