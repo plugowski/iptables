@@ -1,5 +1,5 @@
 {
-    "name": "perfectcube/iptables",
+    "name": "plugowski/iptables",
     "description": "Class to manage entries in iptables.",
     "require-dev": {
         "phpunit/phpunit": "4.8.9"
