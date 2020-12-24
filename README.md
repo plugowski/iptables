@@ -11,9 +11,25 @@ cases.
 
 The simpliest way to install iptables is by the composer.
 
+1) In your composer.json add these: 
+```json 
+{
+    "repositories": [
+      ...
+      {
+        "type": "vcs",
+        "url": "https://github.com/perfectcube/iptables.git"
+      }
+      ...
+    ],
+    "require": {
+        ...
+        "perfectcube/iptables": "dev-master"
+        ...
+    }
+}
 ```
-composer require plugowski/iptables
-```
+2) run composer update
 
 Of course you can also download that repository and load all classes from src into your project (don't forget to load all required files).
 
