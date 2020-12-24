@@ -54,11 +54,65 @@ class Rule
     }
 
     /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDestination()
+    {
+        return $this->destination;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProtocol()
+    {
+        return $this->protocol;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
      * @return int
      */
     public function getNum()
     {
         return $this->num;
+    }
+
+    /**
+     * @return array
+     */
+    public function dump(){
+      return [
+        'num'=>$this->num,
+        'target'=>$this->target,
+        'protocol'=>$this->protocol,
+        'source'=>$this->source,
+        'destination'=>$this->destination,
+        'options'=>$this->options,
+      ];
     }
 
     /**
